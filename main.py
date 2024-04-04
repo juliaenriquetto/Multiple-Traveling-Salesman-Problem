@@ -67,7 +67,7 @@ def n_cities_per_traveler(travellers, cities):
 routes = n_cities_per_traveler(n_travellers, n_cities) # vetor que possui a quantidade de caminhos por caixeiro
 
 # Exemplo de uso
-# print(n_cities_per_traveler(n_travellers, n_cities))
+print(n_cities_per_traveler(n_travellers, n_cities))
 
 # 4. Percorrer a matrix e calcular qual é o ponto mais distante a partir
 # do primeiro ponto da matriz
@@ -131,3 +131,32 @@ next_city = nearby_city(matrix, city_avarage_distance)
 # print("A matriz é", matrix, "sua ultima posicao é", final_city ,"o ponto médio é", city_avarage_distance, 
 #      "e seu ponto mais proximo na matriz é", next_city)
 
+
+# 7. Gerar matriz que tem a ordem dos caminhos(cidades) a serem percorridos #ESTA COM ERRO
+def ordered_paths(m):
+    vet_caminhos = []
+    anterior = final_city
+    atual = next_city
+
+    #vet_caminhos[0] = matrix[0] # primeira posição recebe a primeira posição da matrix
+    matrix[1] = anterior # segunda posicao do vetor recebe a cidade mais longe 
+    matrix[2] = atual # terceira posicao do vetor recebe a cidade mais proxima entre a media das duas cidades
+
+    for i in vet_caminhos[2:]:
+        anterior = atual
+        atual = avarage_distance(anterior, atual), nearby_city(matrix, atual)
+        vet_caminhos[i] = atual
+
+    return vet_caminhos
+        
+#caminhos = ordered_paths(matrix)
+
+# Exemplo de uso
+#print("O vetor de caminhos para serem percorridos de acordo com a heruristica = ", caminhos)
+
+# 8. Dar as cidades para os caixeiros de acordo com o vet_caminhos e a quantidade cidades
+# que cada caixeiro deverá viajar. Cada caixeiro viajante terá o seu vetor de caminhos
+
+# 9. Desehar gráfico 
+
+# 10. Ler o arquivo txt, pegar o numero de caixeiros viajantes e a matriz das cidades 
