@@ -6,9 +6,9 @@ import math
 n_travellers = 10 #numero de caixeiros viajantes 
 n_cities = 22
 
-#1. Metodo que cria a matriz 
-#esse metodo é só para criarmos uma matriz para testarmos 
-#a nossa heuristica, ou seja, ela não sera utilizada
+# 1. Metodo que cria a matriz 
+# esse metodo é só para criarmos uma matriz para testarmos 
+# a nossa heuristica, ou seja, ela não sera utilizada
 def create_random_problem(n_cities): 
 
     coordinates = [] #listas são mutaveis
@@ -34,10 +34,10 @@ def create_random_problem(n_cities):
     
     return coordinates
 
-#Exemplo de uso
-#print(create_random_problem(5))
+# Exemplo de uso
+# print(create_random_problem(5))
 
-#2. Caminhar pelo vetor e ver a quantidade de cidades
+# 2. Caminhar pelo vetor e ver a quantidade de cidades
 matrix = create_random_problem(5)
  
 def quantity_cities(matrix):
@@ -47,10 +47,10 @@ def quantity_cities(matrix):
     return i
 
 # Exemplo de uso
-#print("A matriz possui", quantity_cities(matrix), "cidades.")
+# print("A matriz possui", quantity_cities(matrix), "cidades.")
 quant_cities = quantity_cities(matrix)
 
-#3. Dividir a quantidade de cidades para cada caixeiro
+# 3. Dividir a quantidade de cidades para cada caixeiro
 def n_cities_per_traveler(travellers, cities):
 
     routes = [] # vetor que retorna a quantidade de cidades que cada caixeiro ira viajar
@@ -92,4 +92,18 @@ def farthest_city(m):
 
     return max_position
 
-print("A matriz é: ", matrix, "A primeira posicao da matriz é: ", matrix[0], " já a mais distante é: ", farthest_city(matrix))
+# Exemplo de uso
+# print("A matriz é: ", matrix, "A primeira posicao da matriz é: ", matrix[0], " já a mais distante é: ", farthest_city(matrix))
+
+# 5. Media entre a primeira posicao da matriz e a posicao mais longe da matriz
+def avarage_distance(p1, p2):
+    m_x = int((p1[0] + p2[0]) / 2) # calculando media de x
+    m_y = int((p1[1] + p2[1]) / 2) # calculando media de y
+    return (m_x, m_y) # media dos dois valores
+
+starting_city = matrix[0] # pegando a cidade inicial
+final_city = farthest_city(matrix) # pegando a ultima posicao da matriz
+city_avarage_distance = avarage_distance(starting_city, final_city) #media das disntancia entre a cidade inicial e final
+
+# Exemplo de uso
+print("Media entre a cidade inicial", starting_city, "até a cidade final ", final_city, "é", city_avarage_distance)
