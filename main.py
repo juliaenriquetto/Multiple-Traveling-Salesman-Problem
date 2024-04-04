@@ -4,7 +4,7 @@ import math
 #import mathplotlib.pylab as pl
 
 n_travellers = 10 #numero de caixeiros viajantes 
-n_cities = 20
+n_cities = 22
 
 #1. Metodo que cria a matriz 
 #esse metodo é só para criarmos uma matriz para testarmos 
@@ -41,10 +41,10 @@ def create_random_problem(n_cities):
 matrix = create_random_problem(5)
  
 def quantity_cities(matrix):
-    contador = 0
+    i = 0
     for _ in matrix:
-        contador += 1
-    return contador
+        i += 1
+    return i
 
 # Exemplo de uso
 #print("A matriz possui", quantity_cities(matrix), "cidades.")
@@ -52,8 +52,15 @@ quant_cities = quantity_cities(matrix)
 
 #3. Dividir a quantidade de cidades para cada caixeiro
 def number_cities_traveler(travellers, cities):
-    number_per_traveler = travellers / cities
 
-    return number_cities_traveler
+    cities_per_traveller = [] #vetor que retorna a quantidade de cidades que cada caixeiro ira viajar
+    n_per_travellers = int (cities / travellers)
+    rest = int(cities % travellers)
+    cities_per_traveller = [n_per_travellers] * travellers
 
-print(n_travellers, quant_cities)
+    for i in range(rest):
+        cities_per_traveller[i] += 1
+        
+    return cities_per_traveller
+
+print(number_cities_traveler(n_travellers, n_cities))
