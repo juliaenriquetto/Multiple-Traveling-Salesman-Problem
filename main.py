@@ -71,7 +71,7 @@ routes = n_cities_per_traveler(n_travellers, n_cities) # vetor que possui a quan
 
 # 4. Percorrer a matrix e calcular qual é o ponto mais distante a partir
 # do primeiro ponto da matriz
-def distance(ponto1, ponto2):
+def euclidean_distance(ponto1, ponto2):
     # Calcula a distância euclidiana entre dois pontos no plano cartesiano. ex. pontos:(x1, y1), (x2, y2)
 
     x1, y1 = ponto1 
@@ -85,12 +85,14 @@ def farthest_city(m):
     max_position = False
 
     for position in m:
-        dist = distance(cities, position)
+        dist = euclidean_distance(cities, position)
         if dist > max_distance:
             max_distance = dist
             max_position = position
 
     return max_position
+
+final_city = farthest_city(matrix) # pegando a ultima posicao da matriz
 
 # Exemplo de uso
 # print("A matriz é: ", matrix, "A primeira posicao da matriz é: ", matrix[0], " já a mais distante é: ", farthest_city(matrix))
@@ -101,9 +103,31 @@ def avarage_distance(p1, p2):
     m_y = int((p1[1] + p2[1]) / 2) # calculando media de y
     return (m_x, m_y) # media dos dois valores
 
-starting_city = matrix[0] # pegando a cidade inicial
-final_city = farthest_city(matrix) # pegando a ultima posicao da matriz
-city_avarage_distance = avarage_distance(starting_city, final_city) #media das disntancia entre a cidade inicial e final
+city_avarage_distance = avarage_distance(matrix[0], final_city) #media das disntancia entre a cidade inicial e final
 
 # Exemplo de uso
-print("Media entre a cidade inicial", starting_city, "até a cidade final ", final_city, "é", city_avarage_distance)
+# print("Media entre a cidade inicial", starting_city, "até a cidade final ", final_city, "é", city_avarage_distance)
+
+# 6. Ir para a cidade mais próxima da media criada acima, parecido
+# com o metodo farthest_city
+def distance(p1, p2): 
+   return math.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)
+
+def nearby_city(m, distance_avarage):
+    min_distance = float('inf')
+    nearst_city = False
+
+    for p in m:
+        dist = euclidean_distance(p, distance_avarage)
+        if dist < min_distance:
+            min_distance = dist
+            nearst_city = p
+
+    return nearst_city
+
+next_city = nearby_city(matrix, city_avarage_distance)
+
+# Exemplo de uso
+# print("A matriz é", matrix, "sua ultima posicao é", final_city ,"o ponto médio é", city_avarage_distance, 
+#      "e seu ponto mais proximo na matriz é", next_city)
+
