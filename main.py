@@ -67,7 +67,7 @@ def n_cities_per_traveler(travellers, cities):
 routes = n_cities_per_traveler(n_travellers, n_cities) # vetor que possui a quantidade de caminhos por caixeiro
 
 # Exemplo de uso
-print(n_cities_per_traveler(n_travellers, n_cities))
+# print(n_cities_per_traveler(n_travellers, n_cities))
 
 # 4. Percorrer a matrix e calcular qual é o ponto mais distante a partir
 # do primeiro ponto da matriz
@@ -156,6 +156,18 @@ def ordered_paths(m):
 
 # 8. Dar as cidades para os caixeiros de acordo com o vet_caminhos e a quantidade cidades
 # que cada caixeiro deverá viajar. Cada caixeiro viajante terá o seu vetor de caminhos
+def sort_cities_per_traveler(city, quant):
+    distributions = []
+    for quantity in quant:
+        distribution = city[:quantity]
+        distributions.append(distribution)
+        city = city[quantity:]
+    return distributions
+
+# Exemplo de uso
+distributions = sort_cities_per_traveler(matrix, routes) #DE VEZ MATRIX PRECISO COLOCAR O VETOR ORDENADO CRIADO NO METODO ACIMA
+for i, distribution in enumerate(distributions):
+    print(f"Viajante {i + 1} irá passar por:", distribution)
 
 # 9. Desehar gráfico 
 
