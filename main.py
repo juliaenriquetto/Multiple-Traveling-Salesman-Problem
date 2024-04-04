@@ -25,7 +25,7 @@ def create_random_problem(n_cities):
 
     for i in range(n_cities):
         for j in range(i + 1 , n_cities): 
-            distances[i][j] = distances [i][j] = int(       #duplas são imutaveis
+            distances[i][j] = distances [i][j] = int(       #tuplas são imutaveis
                 math.sqrt(
                     (coordinates[j][0] - coordinates[i][0])**2 + #(x1 - x0)
                     (coordinates[j][1] - coordinates[i][1])**2   #(y1 - y0)
@@ -64,4 +64,32 @@ def n_cities_per_traveler(travellers, cities):
         
     return routes
 
-print(n_cities_per_traveler(n_travellers, n_cities))
+routes = n_cities_per_traveler(n_travellers, n_cities) # vetor que possui a quantidade de caminhos por caixeiro
+
+# Exemplo de uso
+# print(n_cities_per_traveler(n_travellers, n_cities))
+
+# 4. Percorrer a matrix e calcular qual é o ponto mais distante a partir
+# do primeiro ponto da matriz
+def distance(ponto1, ponto2):
+    # Calcula a distância euclidiana entre dois pontos no plano cartesiano. ex. pontos:(x1, y1), (x2, y2)
+
+    x1, y1 = ponto1 
+    x2, y2 = ponto2
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+# Encontra a posição mais distante em relação à primeira posição na matriz de pontos.
+def farthest_city(m):
+    cities = m[0]
+    max_distance = 0
+    max_position = False
+
+    for position in m:
+        dist = distance(cities, position)
+        if dist > max_distance:
+            max_distance = dist
+            max_position = position
+
+    return max_position
+
+print("A matriz é: ", matrix, "A primeira posicao da matriz é: ", matrix[0], " já a mais distante é: ", farthest_city(matrix))
