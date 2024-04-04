@@ -1,7 +1,7 @@
 import random 
 import math
-#import mathplotlib.collection as mc
-#import mathplotlib.pylab as pl
+import matplotlib.collection as mc
+import matplotlib.pylab as pl
 
 n_travellers = 10 #numero de caixeiros viajantes 
 n_cities = 22
@@ -170,5 +170,45 @@ for i, distribution in enumerate(distributions):
     print(f"Viajante {i + 1} irá passar por:", distribution)
 
 # 9. Desehar gráfico 
+def generate_lines(coordinates, tour): 
+
+    lines = list()
+
+    for j in range(n_cities - 1): 
+        lines.append(
+            [
+                coordinates[tour[j]],
+                coordinates[tour[j + 1]]
+            ]
+        )
+    
+    lines.append(
+        [
+            coordinates[tour[-1]],
+            coordinates[tour[0]]
+        ]
+    )
+
+    return lines
+
+def plot_tour(coordinates, tour):
+    
+    lc = mc.LineCollection(generate_lines(coordinates, tour), linewidhts = 2) #armazenar as linhas, 
+    fig, ax = pl.subplots() #avisando que vai começar a desenhar 
+    ax.add_collection(lc) #desenhar as linhas
+    ax.autoscale() #ajutando tamanho do desenho, no fundo
+    ax.margins(0.1) #ajustando as margens
+    pl.scatter(coordinates[0], coordinates[1]) #desenhando o grafo => CORRIGIR AQUI
+    pl.title("Tour") #nome do grafo
+    pl.xlabel("Coordenada X")
+    pl.ylabel("Coordenada Y")
+    pl.savefig("meutour.png") #salvar a figura
+    pl.close() #fechar o projeto
+
+# Exemplo de uso
+#n_cities = 5
+#coordinates, distances = 0 #dados já oferecidos
+#tour = 0 #chamamos a nossa heuristica AQUI
+#plot_tour(coordinates, tour)
 
 # 10. Ler o arquivo txt, pegar o numero de caixeiros viajantes e a matriz das cidades 
