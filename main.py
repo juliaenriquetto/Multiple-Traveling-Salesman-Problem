@@ -51,16 +51,17 @@ def quantity_cities(matrix):
 quant_cities = quantity_cities(matrix)
 
 #3. Dividir a quantidade de cidades para cada caixeiro
-def number_cities_traveler(travellers, cities):
+def n_cities_per_traveler(travellers, cities):
 
-    cities_per_traveller = [] #vetor que retorna a quantidade de cidades que cada caixeiro ira viajar
-    n_per_travellers = int (cities / travellers)
+    routes = [] # vetor que retorna a quantidade de cidades que cada caixeiro ira viajar
+    cities_per_travellers = int (cities / travellers) 
     rest = int(cities % travellers)
-    cities_per_traveller = [n_per_travellers] * travellers
+    routes = [cities_per_travellers] * travellers # divide as cidades para cada viajante
 
+    # as cidades que restarem serão somadas aos primeiros caixeiros do vetor
     for i in range(rest):
-        cities_per_traveller[i] += 1
+        routes[i] += 1
         
-    return cities_per_traveller
+    return routes
 
-print(number_cities_traveler(n_travellers, n_cities))
+print(n_cities_per_traveler(n_travellers, n_cities))
