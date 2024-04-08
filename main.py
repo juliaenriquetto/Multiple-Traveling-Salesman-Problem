@@ -1,9 +1,9 @@
 import random 
 import math
-import matplotlib.collection as mc
+import matplotlib.collections as mc
 import matplotlib.pylab as pl
 
-n_travellers = 10 #numero de caixeiros viajantes 
+n_travellers = 10 # numero de caixeiros viajantes 
 n_cities = 22
 
 # 1. Metodo que cria a matriz 
@@ -38,17 +38,7 @@ def create_random_problem(n_cities):
 # print(create_random_problem(5))
 
 # 2. Caminhar pelo vetor e ver a quantidade de cidades
-matrix = create_random_problem(5)
- 
-def quantity_cities(matrix):
-    i = 0
-    for _ in matrix:
-        i += 1
-    return i
-
-# Exemplo de uso
-# print("A matriz possui", quantity_cities(matrix), "cidades.")
-quant_cities = quantity_cities(matrix)
+matrix = create_random_problem(n_cities)
 
 # 3. Dividir a quantidade de cidades para cada caixeiro
 def n_cities_per_traveler(travellers, cities):
@@ -64,7 +54,7 @@ def n_cities_per_traveler(travellers, cities):
         
     return routes
 
-routes = n_cities_per_traveler(n_travellers, n_cities) # vetor que possui a quantidade de caminhos por caixeiro
+n_cities_to_be_visited = n_cities_per_traveler(n_travellers, n_cities) # vetor que possui a quantidade de caminhos por caixeiro
 
 # Exemplo de uso
 # print(n_cities_per_traveler(n_travellers, n_cities))
@@ -132,27 +122,28 @@ next_city = nearby_city(matrix, city_avarage_distance)
 #      "e seu ponto mais proximo na matriz é", next_city)
 
 
-# 7. Gerar matriz que tem a ordem dos caminhos(cidades) a serem percorridos #ESTA COM ERRO
+# 7. Gerar matriz que tem a ordem dos caminhos(cidades) a serem percorridos 
+# Recebemos ajuda do monitor Marcos para arrumar esse método, porque estava com erro tanto de execução quanto de lógica
 def ordered_paths(m):
-    vet_caminhos = []
-    anterior = final_city
-    atual = next_city
+    if n_cities == 1:
+        return [m[0]]
 
-    #vet_caminhos[0] = matrix[0] # primeira posição recebe a primeira posição da matrix
-    matrix[1] = anterior # segunda posicao do vetor recebe a cidade mais longe 
-    matrix[2] = atual # terceira posicao do vetor recebe a cidade mais proxima entre a media das duas cidades
+    if n_cities == 2:
+        return [m[0], final_city]
 
-    for i in vet_caminhos[2:]:
-        anterior = atual
-        atual = avarage_distance(anterior, atual), nearby_city(matrix, atual)
-        vet_caminhos[i] = atual
+    vet_caminhos = [m[0], final_city, next_city]
+
+    for i in range(1, n_cities - 1):
+        avg = avarage_distance(vet_caminhos[i], vet_caminhos[i+1])
+        next = nearby_city(matrix, avg)
+        vet_caminhos.append(next)
 
     return vet_caminhos
         
-#caminhos = ordered_paths(matrix)
+caminhos = ordered_paths(matrix)
 
 # Exemplo de uso
-#print("O vetor de caminhos para serem percorridos de acordo com a heruristica = ", caminhos)
+print("O vetor de caminhos para serem percorridos de acordo com a heruristica = ", caminhos)
 
 # 8. Dar as cidades para os caixeiros de acordo com o vet_caminhos e a quantidade cidades
 # que cada caixeiro deverá viajar. Cada caixeiro viajante terá o seu vetor de caminhos
@@ -165,9 +156,9 @@ def sort_cities_per_traveler(city, quant):
     return distributions
 
 # Exemplo de uso
-distributions = sort_cities_per_traveler(matrix, routes) #DE VEZ MATRIX PRECISO COLOCAR O VETOR ORDENADO CRIADO NO METODO ACIMA
-for i, distribution in enumerate(distributions):
-    print(f"Viajante {i + 1} irá passar por:", distribution)
+#distributions = sort_cities_per_traveler(matrix, n_cities_to_be_visited) #DE VEZ MATRIX PRECISO COLOCAR O VETOR ORDENADO CRIADO NO METODO ACIMA
+#for i, distribution in enumerate(distributions):
+   # print(f"Viajante {i + 1} irá passar por:", distribution)
 
 # 9. Desehar gráfico 
 def generate_lines(coordinates, tour): 
