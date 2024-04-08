@@ -3,12 +3,11 @@ import math
 import matplotlib.collections as mc
 import matplotlib.pylab as pl
 
-n_travellers = 10 # numero de caixeiros viajantes 
+n_travellers = 10
 n_cities = 22
 
 # 1. Metodo que cria a matriz 
-# esse metodo é só para criarmos uma matriz para testarmos 
-# a nossa heuristica, ou seja, ela não sera utilizada
+# esse metodo é só para testes
 def create_random_problem(n_cities): 
 
     coordinates = [] #listas são mutaveis
