@@ -5,26 +5,9 @@ import matplotlib.pylab as pl
 import tkinter as tk
 from tkinter import filedialog
 
-matrix = [
-    (0, 500), (731, 587), (101, 29), (249, 645), (230, 56),
-    (986, 130), (66, 859), (389, 311), (586, 672), (787, 726),
-    (544, 949), (13, 154), (191, 859), (703, 639), (122, 503),
-    (187, 910), (582, 916), (653, 995), (898, 742), (730, 148),
-    (53, 545), (150, 458), (70, 293), (970, 112), (540, 301),
-    (986, 233), (969, 86), (445, 721), (349, 459), (675, 127),
-    (109, 816), (371, 141), (413, 541), (189, 473), (470, 231),
-    (837, 517), (57, 143), (872, 328), (988, 471), (76, 142),
-    (793, 758), (625, 780), (311, 542), (755, 356), (107, 474),
-    (72, 276), (710, 225), (997, 678), (474, 250), (775, 632),
-    (220, 850), (330, 818), (73, 106), (582, 689), (483, 99),
-    (264, 821), (152, 700), (929, 976), (901, 783), (983, 421),
-    (316, 189), (866, 396), (179, 848), (457, 154), (502, 772),
-    (521, 260), (164, 787), (378, 5), (25, 507), (919, 420),
-    (414, 761), (799, 421)
-]
-
+# Informe a quantidade de viajantes e de cidades antes de rodar o projeto
 n_travellers = 5
-n_cities = 72
+n_cities = 84
 
 #1. Métodos que lê o arquivo e mostra a quantidade de viajeiros e a matriz #TA COM ERRO NA HORA DE LER TODAS AS CIDADES
 def read_arq_txt():
@@ -40,12 +23,11 @@ def read_arq_txt():
             m_cities.append((x, y))
         return m_cities
 
-# matrix = m_cities
+m_cities = read_arq_txt()
+matrix = m_cities
 
 # Exemplo de uso
-# m_cities = read_arq_txt()
 # print(m_cities)
-
 
 # 2. Dividir a quantidade de cidades para cada caixeiro
 def n_cities_per_traveler(travellers, cities):
@@ -170,7 +152,7 @@ print(distributions)
 #for i, distribution in enumerate(distributions):
 #   print(f"Viajante {i + 1} irá passar por:", distribution)
 
-# 8. Calcula a eficiencia da nossa heuristica = TA TODO ERRADO, VAI NO CHAT GPT
+# 8. Calcula a eficiencia da nossa heuristica
 def get_total_distance(mVet):
     add_distance = 0
     for v in mVet:
@@ -227,4 +209,3 @@ def plot_tour(routes, tour):
 # Exemplo de uso
 plot_tour(routes, distributions)
 """
-
