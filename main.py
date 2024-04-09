@@ -42,14 +42,25 @@ def create_random_problem(n_cities):
 
 #VARIAVEIS
 matrix = [
-    (500, 500), (826, 465), (359, 783), (563, 182), (547, 438), (569, 676), (989, 416), (648, 750), (694, 978),
-    (493, 969), (175, 89), (104, 130), (257, 848), (791, 249), (952, 204), (34, 654), (89, 503), (548, 964),
-    (492, 34), (749, 592), (536, 875), (373, 708), (385, 260), (560, 751), (304, 516), (741, 368), (59, 131),
-    (154, 681), (425, 456), (885, 783), (30, 415), (61, 25)
+    (0, 500), (731, 587), (101, 29), (249, 645), (230, 56),
+    (986, 130), (66, 859), (389, 311), (586, 672), (787, 726),
+    (544, 949), (13, 154), (191, 859), (703, 639), (122, 503),
+    (187, 910), (582, 916), (653, 995), (898, 742), (730, 148),
+    (53, 545), (150, 458), (70, 293), (970, 112), (540, 301),
+    (986, 233), (969, 86), (445, 721), (349, 459), (675, 127),
+    (109, 816), (371, 141), (413, 541), (189, 473), (470, 231),
+    (837, 517), (57, 143), (872, 328), (988, 471), (76, 142),
+    (793, 758), (625, 780), (311, 542), (755, 356), (107, 474),
+    (72, 276), (710, 225), (997, 678), (474, 250), (775, 632),
+    (220, 850), (330, 818), (73, 106), (582, 689), (483, 99),
+    (264, 821), (152, 700), (929, 976), (901, 783), (983, 421),
+    (316, 189), (866, 396), (179, 848), (457, 154), (502, 772),
+    (521, 260), (164, 787), (378, 5), (25, 507), (919, 420),
+    (414, 761), (799, 421)
 ]
 
-n_travellers = 3
-n_cities = 32
+n_travellers = 5
+n_cities = 72
 
 #1. Métodos que lê o arquivo e mostra a quantidade de viajeiros e a matriz
 
@@ -171,22 +182,27 @@ def sort_cities_per_traveler(city, quant):
 
 distributions = sort_cities_per_traveler(routes, n_cities_to_be_visited) 
 print(distributions)
+
+# Exemplo de uso
 #for i, distribution in enumerate(distributions):
 #   print(f"Viajante {i + 1} irá passar por:", distribution)
 
 # 8. Calcula a eficiencia da nossa heuristica = TA TODO ERRADO, VAI NO CHAT GPT
-def get_total_distance(tour): #tour = caminho
-    
-    for i in range(n_cities - 1): 
-        total_distance = total_distance + matrix[tour[i]][tour[i+1]]
+def get_total_distance(mVet):
+    add_distance = 0
+    for v in mVet:
+        distance_vector = 0
+        for i in range(1, len(v)):
+            p_previous = v[i - 1]
+            p_current = v[i]
+            distance = math.sqrt((p_current[0] - p_previous[0])**2 + (p_current[1] - p_previous[1])**2)
+            distance_vector += distance
+        add_distance += int(distance_vector)
+    return add_distance
 
-    #somando tudo  = total percorrido + ultima cidade ate a primeira do incio
-    total_distance = total_distance  + matrix[tour[-1]][tour[0]]
-    return total_distance
-    
-tour = ordered_paths(matrix)
-#print(get_total_distance(tour)) 
-   
+# Exemplo de uso 
+add_distance = get_total_distance(distributions)
+print("A soma das distâncias dos vetores é:", add_distance)
 
 # 9. Desehar gráfico 
 """
