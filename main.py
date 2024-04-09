@@ -2,12 +2,13 @@ import random
 import math
 import matplotlib.collections as mc
 import matplotlib.pylab as pl
+import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import filedialog
 
 # Informe a quantidade de viajantes e de cidades antes de rodar o projeto
-n_travellers = 5
-n_cities = 84
+n_travellers = 3
+n_cities = 48
 
 #1. Métodos que lê o arquivo e mostra a quantidade de viajeiros e a matriz #TA COM ERRO NA HORA DE LER TODAS AS CIDADES
 def read_arq_txt():
@@ -146,7 +147,7 @@ def sort_cities_per_traveler(city, quant):
     return distributions
 
 distributions = sort_cities_per_traveler(routes, n_cities_to_be_visited) 
-print(distributions)
+# print(distributions)
 
 # Exemplo de uso
 #for i, distribution in enumerate(distributions):
@@ -170,42 +171,50 @@ add_distance = get_total_distance(distributions)
 print("A soma das distâncias dos vetores é:", add_distance)
 
 # 9. Desehar gráfico 
-"""
-def generate_lines(routes, tour): 
+# Para desenhar o gráfico usaremos a matriz routes, que já retorna a ordem das cidades certas a serem percorridas
+# porém o metodo que cria o routes, gera no final um elemento vazio (), por isso esse método serve apenas para 
+# apagar esse ultimo elemento vazio. Criando uma nova rota a que vai ser desenhada
+def remove_empty(routes):
+    # Verifica se a matriz não está vazia
+    if routes:
+        # Percorre a matriz de trás para frente
+        for i in range(len(routes) - 1, -1, -1):
+            if not routes[i]:  # Verifica se o elemento é vazio
+                routes.pop(i)  # Remove o elemento vazio
+                break  # Sai do loop após remover o elemento vazio
+    return routes
 
-    lines = list()
+new_routes = remove_empty(routes) # A partir da nova rota vamos desenhar o gráfico
 
-    for j in range(n_cities - 1): 
-        lines.append(
-            [
-                routes[tour[j]],
-                routes[tour[j + 1]]
-            ]
-        )
-    
-    lines.append(
-        [
-            routes[tour[-1]],
-            routes[tour[0]]
-        ]
-    )
+plt.figure(figsize=(10, 10))
+plt.gca().set_aspect('equal', adjustable='box')  # Mantém a proporção entre os eixos
 
-    return lines
+# Desenha os pontos
+x, y = zip(*new_routes)
+plt.scatter(x, y)
 
-def plot_tour(routes, tour):
-    
-    lc = mc.LineCollection(generate_lines(routes, tour), linewidhts = 2) #armazenar as linhas, 
-    fig, ax = pl.subplots() #avisando que vai começar a desenhar 
-    ax.add_collection(lc) #desenhar as linhas
-    ax.autoscale() #ajutando tamanho do desenho, no fundo
-    ax.margins(0.1) #ajustando as margens
-    pl.scatter(routes[0], routes[1]) #desenhando o grafo => CORRIGIR AQUI
-    pl.title("Múltiplos Caixeiros Viajantes") #nome do grafo
-    pl.xlabel("Coordenada X")
-    pl.ylabel("Coordenada Y")
-    pl.savefig("meutour.png") #salvar a figura
-    pl.close() #fechar o projeto
+# Adiciona os rótulos dos pontos
+for i, (x, y) in enumerate(new_routes):
+    plt.annotate(f"{i+1}", (x, y), textcoords="offset points", xytext=(0,10), ha='center')
 
-# Exemplo de uso
-plot_tour(routes, distributions)
-"""
+# Desenha as linhas entre os pontos
+for i in range(len(new_routes) - 1):
+    x_values = [new_routes[i][0], new_routes[i+1][0]]
+    y_values = [new_routes[i][1], new_routes[i+1][1]]
+    plt.plot(x_values, y_values, 'k-')
+
+# Adiciona a linha final entre o último e o primeiro ponto
+x_values = [new_routes[-1][0], new_routes[0][0]]
+y_values = [new_routes[-1][1], new_routes[0][1]]
+plt.plot(x_values, y_values, 'k-')
+
+plt.xlabel('Coordenadas X')
+plt.ylabel('Coordenadas Y')
+plt.title('Multiplos Caixeiros Viajantes')
+
+plt.grid(True)
+
+# Salva a imagem em um arquivo
+plt.savefig('desenho_caminhos.png')
+
+plt.show()
