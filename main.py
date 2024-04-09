@@ -2,45 +2,9 @@ import random
 import math
 import matplotlib.collections as mc
 import matplotlib.pylab as pl
+import tkinter as tk
+from tkinter import filedialog
 
-# 1. Metodo que cria a matriz 
-# esse metodo é só para testes
-"""
-def create_random_problem(n_cities): 
-
-    coordinates = [] #listas são mutaveis
-
-    for _ in range(n_cities): 
-        coordinates.append(
-            (
-                int(random.uniform(0, 100)), 
-                int(random.uniform(0, 100))
-            )
-        )
-
-    distances = [[0 for i in range(n_cities)] for i in range(n_cities)] 
-
-    for i in range(n_cities):
-        for j in range(i + 1 , n_cities): 
-            distances[i][j] = distances [i][j] = int(       #tuplas são imutaveis
-                math.sqrt(
-                    (coordinates[j][0] - coordinates[i][0])**2 + #(x1 - x0)
-                    (coordinates[j][1] - coordinates[i][1])**2   #(y1 - y0)
-                )
-            )
-    
-    return coordinates
-"""
-# Exemplo de uso
-# print(create_random_problem(5))
-
-# 2. Caminhar pelo vetor e ver a quantidade de cidades
-# matrix = create_random_problem(n_cities)
-
-
-#CÓDIGO OFICIAL COMEÇA AQUI
-
-#VARIAVEIS
 matrix = [
     (0, 500), (731, 587), (101, 29), (249, 645), (230, 56),
     (986, 130), (66, 859), (389, 311), (586, 672), (787, 726),
@@ -62,7 +26,26 @@ matrix = [
 n_travellers = 5
 n_cities = 72
 
-#1. Métodos que lê o arquivo e mostra a quantidade de viajeiros e a matriz
+#1. Métodos que lê o arquivo e mostra a quantidade de viajeiros e a matriz #TA COM ERRO NA HORA DE LER TODAS AS CIDADES
+def read_arq_txt():
+    root = tk.Tk()
+    root.withdraw()  # Esconde a janela principal
+    name_arq = filedialog.askopenfilename(title="Selecione o arquivo TXT")  # Abre o explorador de arquivos
+    with open(name_arq, 'r') as arq:
+        lines = arq.readlines()
+        m_cities = []
+        for line in lines:
+            x = int(line[3:6])  # Lê os caracteres 4 ao 6 como valor de x #ERRO ESTÁ AQUI
+            y = int(line[7:10])  # Lê os caracteres 8 ao 10 como valor de y
+            m_cities.append((x, y))
+        return m_cities
+
+# matrix = m_cities
+
+# Exemplo de uso
+# m_cities = read_arq_txt()
+# print(m_cities)
+
 
 # 2. Dividir a quantidade de cidades para cada caixeiro
 def n_cities_per_traveler(travellers, cities):
