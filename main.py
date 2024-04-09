@@ -1,16 +1,18 @@
+# Clara Andrade Sant'Anna Santos
+# Julia Enriquetto de Brito 
 import random 
 import math
 import matplotlib.collections as mc
 import matplotlib.pylab as pl
 import matplotlib.pyplot as plt
-import tkinter as tk
-from tkinter import filedialog
+import tkinter as tk  # bib de interface gráfica (GUIs)
+from tkinter import filedialog # o filedialog serve para selecionar arquivos
 
-# Informe a quantidade de viajantes e de cidades antes de rodar o projeto
+# Informe a quantidade de viajantes e de cidades antes de rodar o projeto (de acordo com as instâncias disponibilizadas)
 n_travellers = 3
 n_cities = 48
 
-#1. Métodos que lê o arquivo e mostra a quantidade de viajeiros e a matriz #TA COM ERRO NA HORA DE LER TODAS AS CIDADES
+#1. Método que lê o arquivo e mostra a quantidade de caixeiros e a matriz
 def read_arq_txt():
     root = tk.Tk()
     root.withdraw()  # Esconde a janela principal
@@ -19,15 +21,15 @@ def read_arq_txt():
         lines = arq.readlines()
         m_cities = []
         for line in lines:
-            x = int(line[3:6])  # Lê os caracteres 4 ao 6 como valor de x #ERRO ESTÁ AQUI
+            x = int(line[3:6])  # Lê os caracteres 4 ao 6 como valor de x 
             y = int(line[7:10])  # Lê os caracteres 8 ao 10 como valor de y
             m_cities.append((x, y))
         return m_cities
 
-m_cities = read_arq_txt()
+m_cities = read_arq_txt() # matriz de cidades
 matrix = m_cities
 
-# Exemplo de uso
+# Exemplo de uso - testes de funcionamento
 # print(m_cities)
 
 # 2. Dividir a quantidade de cidades para cada caixeiro
@@ -49,16 +51,17 @@ n_cities_to_be_visited = n_cities_per_traveler(n_travellers, n_cities) # vetor q
 # Exemplo de uso
 # print(n_cities_per_traveler(n_travellers, n_cities))
 
-# 3. Percorrer a matrix e calcular qual é o ponto mais distante a partir
+# 3. Percorrer a matriz e calcular qual é o ponto mais distante a partir
 # do primeiro ponto da matriz
 def euclidean_distance(ponto1, ponto2):
     # Calcula a distância euclidiana entre dois pontos no plano cartesiano. ex. pontos:(x1, y1), (x2, y2)
+    # Utilizamos como base o metodo do código do professor, feito em aula 
 
     x1, y1 = ponto1 
     x2, y2 = ponto2
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-# Encontra a posição mais distante em relação à primeira posição na matriz de pontos.
+# Encontra a posição mais distante em relação à primeira posição na matriz de pontos
 def farthest_city(m):
     cities = m[0]
     max_distance = 0
@@ -83,19 +86,16 @@ def avarage_distance(p1, p2):
     m_y = int((p1[1] + p2[1]) / 2) # calculando media de y
     return (m_x, m_y) # media dos dois valores
 
-city_avarage_distance = avarage_distance(matrix[0], final_city) #media das disntancia entre a cidade inicial e final
+city_avarage_distance = avarage_distance(matrix[0], final_city) # media das disntancia entre a cidade inicial e final
 
 # Exemplo de uso
 # print("Media entre a cidade inicial", starting_city, "até a cidade final ", final_city, "é", city_avarage_distance)
 
 # 5. Ir para a cidade mais próxima da media criada acima, parecido
 # com o metodo farthest_city
-def distance(p1, p2): 
-   return math.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)
-
 def nearby_city(m, distance_avarage, already_visited):
     
-    min_distance = float('inf')
+    min_distance = float('inf') # float('inf') foi utilizado para inicializar a variável utilizando infinito (inf) +
     nearst_city = tuple()
 
     for p in m:
@@ -116,7 +116,7 @@ next_city = nearby_city(matrix, city_avarage_distance, [])
 # 6. Gerar matriz que tem a ordem dos caminhos(cidades) a serem percorridos 
 # Recebemos ajuda do monitor Marcos para arrumar esse método, porque estava com erro tanto de execução quanto de lógica
 def ordered_paths(m):
-    if n_cities == 1:
+    if n_cities == 1: 
         return [m[0]]
 
     if n_cities == 2:
@@ -141,7 +141,7 @@ routes = ordered_paths(matrix)
 def sort_cities_per_traveler(city, quant):
     distributions = []
     for quantity in quant:
-        distribution = city[:quantity]
+        distribution = city[:quantity] # começa a partir do 1 :quantity
         distributions.append(distribution)
         city = city[quantity:]
     return distributions
